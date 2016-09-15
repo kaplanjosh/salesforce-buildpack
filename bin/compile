@@ -149,7 +149,7 @@ export NODE_PATH="\$HOME/$SALESFORCE_DIR_NAME/node_modules"
 # log SALESFORCE_ and HEROKU_ config vars
 if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
     echo "[DEBUG] PATH=\$PATH"
-    for e in \$(env | grep '^SALESFORCE_\|^HEROKU_|^APPCLOUD_|^XDG_|^NODE_'); do
+    for e in \$(env | grep '^SALESFORCE_\|^HEROKU_\|^APPCLOUD_\|^XDG_\|^NODE_'); do
         echo "[DEBUG] \$e"
     done
 fi
