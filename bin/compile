@@ -79,8 +79,8 @@ if [ ! -f $SALESFORCE_DIR/node/bin/node ]; then
 fi
 
 # install secret tool used by appcloud
-# FIXME: disabled for now
-install_libsecret
+# FIXME: disabled until we enable encryption on toolbelt
+#install_libsecret
 
 # delegate actual source deployment to node script
 export SALESFORCE_DEPLOY_DIR="$SALESFORCE_DIR"
@@ -121,7 +121,8 @@ status "Heroku CLI and AppCloud and Force CLI Plugins installation complete"
 export SALESFORCE_DEPLOY_DIR="\$HOME/$SALESFORCE_DIR_NAME"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/salesforce-env.sh
-echo "Exporting env vars for Heroku CLI and plugins"
+echo "Setting up environment to invoke AppCloud plugin commands..."
+
 export PATH="\$PATH:\$HOME/$VENDORED_HEROKU_CLI/heroku/bin:\$HOME/$SALESFORCE_DIR/node/bin"
 echo "PATH=\$PATH"
 export XDG_DATA_HOME="\$HOME/.local"
@@ -129,7 +130,7 @@ export XDG_CACHE_HOME="\$HOME/.cache"
 
 # inherited SALESFORCE_ and HEROKU_ config vars
 $(for e in $(env | grep '^SALESFORCE_\|^HEROKU_'); do
-echo "export $e"
+echo "\$e"
 done)
 export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
 
