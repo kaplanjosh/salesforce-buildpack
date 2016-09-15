@@ -83,6 +83,7 @@ fi
 #install_libsecret
 
 # delegate actual source deployment to node script
+: ${SALESFORCE_BYPASS_COMPILE:=false}
 export SALESFORCE_DEPLOY_DIR="$SALESFORCE_DIR"
 if [ "$SALESFORCE_BYPASS_COMPILE" == "true" ]; then
     status "Invoking $SALESFORCE_DIR/force.js compile phase..."
