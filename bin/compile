@@ -130,10 +130,10 @@ export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
 
 # log SALESFORCE_ and HEROKU_ config vars
 if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
-    echo "PATH=\$PATH"
+    echo "[DEBUG] PATH=\$PATH"
     for e in \$(env | grep '^SALESFORCE_\|^HEROKU_'); do
-        echo "\$e=\$(e)"
-    fi
+        echo "[DEBUG] \$e=\$(e)"
+    done
 fi
 
 # setup env to support AppCloud and Force.com CLI commands
