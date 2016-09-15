@@ -130,6 +130,8 @@ heroku plugins
 
 status "Heroku CLI and AppCloud and Force CLI Plugins installation complete"
 
+# write env script to set various vars so release and test scripts
+# can use heroku cli and plugins
 export SALESFORCE_DEPLOY_DIR="\$HOME/$SALESFORCE_DIR_NAME"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/salesforce-env.sh
