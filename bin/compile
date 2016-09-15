@@ -57,8 +57,7 @@ cp $BP_DIR/package.json $SALESFORCE_DIR/package.json
 
 status "Installing node modules..."
 cd $SALESFORCE_DIR
-mkdir -p "$BUILD_DIR/.local/heroku/plugins/node_modules"
-npm install -prefix "$BUILD_DIR/.local/heroku/plugins/node_modules" | indent
+npm install | indent
 
 # set defaults for optional config vars
 if [[ ! -v SALESFORCE_BYOO ]]; then
@@ -139,7 +138,7 @@ export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
 # set so appcloud plugin knows where deployment zip resides
 export SALESFORCE_DEPLOY_DIR="\$HOME/$SALESFORCE_DIR_NAME"
 # set node path to use shared modules
-export NODE_PATH="\$HOME/.local/heroku/plugins/node_modules"
+export NODE_PATH="\$HOME/.$SALESFORCE_DIR_NAME/node_modules"
 
 # log SALESFORCE_ and HEROKU_ config vars
 if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
