@@ -84,8 +84,13 @@ fi
 
 # delegate actual source deployment to node script
 export SALESFORCE_DEPLOY_DIR="$SALESFORCE_DIR"
-status "Invoking $SALESFORCE_DIR/force.js compile phase..."
-$SALESFORCE_DIR/node/bin/node $SALESFORCE_DIR/force.js compile
+if [ "$SALESFORCE_BYPASS_COMPILE" == "true" ]; then
+    status "Invoking $SALESFORCE_DIR/force.js compile phase..."
+    $SALESFORCE_DIR/node/bin/node $SALESFORCE_DIR/force.js compile
+else
+    # bypass when the add-on created org is not used, eg Review app aren't used by Test Runner
+    status "Bypassing compile phase"
+fi
 
 status "Installing Heroku CLI and AppCloud and Force CLI Plugins"
 
