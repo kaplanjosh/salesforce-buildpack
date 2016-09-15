@@ -57,7 +57,7 @@ cp $BP_DIR/package.json $SALESFORCE_DIR/package.json
 
 status "Installing node modules..."
 cd $SALESFORCE_DIR
-npm install | indent
+npm install --prefix $SALESFORCE_DIR | indent
 
 # set defaults for optional config vars
 if [[ ! -v SALESFORCE_BYOO ]]; then
@@ -118,6 +118,11 @@ export XDG_CACHE_HOME="$BUILD_DIR/.cache"
 # tar as 'heroku update' alters what is being tar'd)
 mkdir -p $XDG_CACHE_HOME/heroku
 touch $XDG_CACHE_HOME/heroku/autoupdate
+# re-use node modules
+ls $SALESFORCE_DIR/node_modules
+mkdir -p $XDG_DATA_HOME/heroku/plugins
+ln -s $SALESFORCE_DIR/node_modules $XDG_DATA_HOME/heroku/plugins/node_modules
+# install plugins
 heroku plugins:install salesforce-alm-buildpack-dev
 heroku plugins:install force-cli-dev
 heroku plugins
@@ -138,12 +143,12 @@ export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
 # set so appcloud plugin knows where deployment zip resides
 export SALESFORCE_DEPLOY_DIR="\$HOME/$SALESFORCE_DIR_NAME"
 # set node path to use shared modules
-export NODE_PATH="\$HOME/.$SALESFORCE_DIR_NAME/node_modules"
+export NODE_PATH="\$HOME/$SALESFORCE_DIR_NAME/node_modules"
 
 # log SALESFORCE_ and HEROKU_ config vars
 if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
     echo "[DEBUG] PATH=\$PATH"
-    for e in \$(env | grep '^SALESFORCE_\|^HEROKU_'); do
+    for e in \$(env | grep '^SALESFORCE_\|^HEROKU_|^APPCLOUD|^XDG_|^NODE_'); do
         echo "[DEBUG] \$e"
     done
 fi
