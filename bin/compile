@@ -124,15 +124,17 @@ cat <<EOF >$BUILD_DIR/.profile.d/salesforce-env.sh
 echo "Setting up environment to invoke AppCloud plugin commands..."
 
 export PATH="\$PATH:\$HOME/$VENDORED_HEROKU_CLI/heroku/bin:\$HOME/$SALESFORCE_DIR_NAME/node/bin"
-echo "PATH=\$PATH"
 export XDG_DATA_HOME="\$HOME/.local"
 export XDG_CACHE_HOME="\$HOME/.cache"
-
-# inherited SALESFORCE_ and HEROKU_ config vars
-$(for e in $(env | grep '^SALESFORCE_\|^HEROKU_'); do
-echo "echo $e=\$$e"
-done)
 export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
+
+# log SALESFORCE_ and HEROKU_ config vars
+if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
+    echo "PATH=\$PATH"
+    for e in $(env | grep '^SALESFORCE_\|^HEROKU_'); do
+        echo "\$e=\$(e)"
+    fi
+fi
 
 # setup env to support AppCloud and Force.com CLI commands
 mkdir -p .local/.appcloud
