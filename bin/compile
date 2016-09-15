@@ -127,12 +127,15 @@ status "Heroku CLI and AppCloud and Force CLI Plugins installation complete"
 export SALESFORCE_DEPLOY_DIR="\$HOME/$SALESFORCE_DIR_NAME"
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/salesforce-env.sh
-echo "Setting up environment to invoke AppCloud plugin commands..."
-
+# set path so release and customer scripts and use heroku cli and node exes
 export PATH="\$PATH:\$HOME/$VENDORED_HEROKU_CLI/heroku/bin:\$HOME/$SALESFORCE_DIR_NAME/node/bin"
+# set so heroku cli can re-use plugins
 export XDG_DATA_HOME="\$HOME/.local"
+# set so heroku cli can see heroku/autoupdate to not trigger update
 export XDG_CACHE_HOME="\$HOME/.cache"
+# set so appcloud plugin can use for encryption
 export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
+# set so appcloud plugin knows where deployment zip resides
 export SALESFORCE_DEPLOY_DIR="\$HOME/$SALESFORCE_DIR_NAME"
 
 # log SALESFORCE_ and HEROKU_ config vars
@@ -143,7 +146,7 @@ if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
     done
 fi
 
-# setup env to support AppCloud and Force.com CLI commands
+# setup env to support appcloud and force.com plugin commands
 mkdir -p .local/.appcloud
 $SALESFORCE_DIR_NAME/node/bin/node $SALESFORCE_DIR_NAME/force.js setup
 
