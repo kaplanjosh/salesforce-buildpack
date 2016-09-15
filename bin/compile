@@ -131,7 +131,7 @@ export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
 # log SALESFORCE_ and HEROKU_ config vars
 if [ "\$SALESFORCE_BUILDPACK_VERBOSE" == "true" ]; then
     echo "PATH=\$PATH"
-    for e in $(env | grep '^SALESFORCE_\|^HEROKU_'); do
+    for e in \$(env | grep '^SALESFORCE_\|^HEROKU_'); do
         echo "\$e=\$(e)"
     fi
 fi
