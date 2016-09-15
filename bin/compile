@@ -130,7 +130,7 @@ export XDG_CACHE_HOME="\$HOME/.cache"
 
 # inherited SALESFORCE_ and HEROKU_ config vars
 $(for e in $(env | grep '^SALESFORCE_\|^HEROKU_'); do
-echo "echo \$e"
+echo "echo $e=\$$e"
 done)
 export APPCLOUD_SECRET_TOOL_PATH="\$HOME/.apt/usr/bin/secret-tool"
 
