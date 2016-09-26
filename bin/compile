@@ -81,7 +81,7 @@ fi
 
 # install secret tool used by appcloud
 # FIXME: disabled until we enable encryption on toolbelt
-#install_libsecret
+install_libsecret
 
 # delegate actual source deployment to node script
 : ${SALESFORCE_BYPASS_COMPILE:="false"}
